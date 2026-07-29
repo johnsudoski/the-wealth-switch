@@ -59,6 +59,19 @@ Vertical lifestyle photo, warm cream and gold tones, a person's hands holding a 
 
 ---
 
+## 6. product-mockup.jpg (mockup celular + notebook tocando o produto)
+**Onde entra:** seção de preço/produto na landing page, ao lado ou no lugar da capa quadrada — dá a sensação de "seguro o produto na mão".
+**Proporção:** 4:3 ou 16:9 (composição horizontal com os dois dispositivos).
+
+**Prompt:**
+```
+Realistic product mockup photography, a modern smartphone and an open laptop resting together on a warm wooden desk with soft natural window light, both screens displaying a minimalist premium audio-player app interface in warm cream and gold tones (#faf6ee background, #b8860b gold accent) with a simple circular play button, soft radiating sound-wave graphic, and the text "The Wealth Switch" in a clean modern serif-adjacent font at the top of the screen, subtle waveform animation visual on the phone screen, shallow depth of field, cozy warm-toned home office setting softly blurred in the background, no hands, no other text, high-end tech product photography style like an Apple or Calm app product shot, --ar 4:3 --v 6
+```
+*Variação alternativa (com mão seguranda o celular, se quiser reforçar ainda mais a sensação de "segurar"):*
+```
+Realistic lifestyle product photography, a person's hand holding a smartphone displaying a minimalist premium audio-player app interface in warm cream and gold tones (#faf6ee background, #b8860b gold accent) with a play button and soft sound-wave graphic and "The Wealth Switch" title, an open laptop with the same warm-toned interface visible slightly out of focus in the background on a wooden desk, soft morning window light, cozy warm home office setting, shallow depth of field, high-end tech product photography style, --ar 4:3 --v 6
+```
+
 ## Notas
 
 - **Nenhuma imagem deve conter promessa visual enganosa** (ex: pilhas de dinheiro, carros de luxo, "antes e depois" de conta bancária) — mantém consistência com a copy honesta da página.
