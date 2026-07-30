@@ -1,0 +1,46 @@
+name: Renew HTTPS Certificate
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  check-and-renew:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check certificate expiry and renew if needed
+        env:
+          GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "PAGES_ADMIN_TOKEN secret not set. See .github/workflows/README.md for setup." >&2
+            exit 1
+          fi
+
+          INFO=$(gh api "repos/$REPO/pages")
+          EXPIRES=$(echo "$INFO" | jq -r '.https_certificate.expires_at // empty')
+          CNAME=$(echo "$INFO" | jq -r '.cname // empty')
+
+          if [ -z "$EXPIRES" ] || [ -z "$CNAME" ] || [ "$CNAME" = "null" ]; then
+            echo "No certificate or custom domain configured — nothing to renew."
+            exit 0
+          fi
+
+          EXPIRES_EPOCH=$(date -d "$EXPIRES" +%s)
+          NOW_EPOCH=$(date +%s)
+          DAYS_LEFT=$(( (EXPIRES_EPOCH - NOW_EPOCH) / 86400 ))
+
+          echo "Certificate for $CNAME expires in $DAYS_LEFT day(s) ($EXPIRES)."
+
+          if [ "$DAYS_LEFT" -le 3 ]; then
+            echo "Within renewal window (<= 3 days) — forcing re-issuance."
+            gh api -X PUT "repos/$REPO/pages" -f cname="" > /dev/null
+            sleep 10
+            gh api -X PUT "repos/$REPO/pages" -f cname="$CNAME" > /dev/null
+            echo "Re-added custom domain $CNAME to trigger fresh certificate issuance."
+            echo "Check status at: https://github.com/$REPO/settings/pages"
+          else
+            echo "Certificate still valid for more than 3 days — no action needed."
+          fi
